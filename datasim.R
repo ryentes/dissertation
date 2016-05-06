@@ -1,8 +1,11 @@
 # import utils
 
 # import item parameters
+x <- read.table("resources/itempar.dat", header=T, row.names=1,
+                stringsAsFactors=F)
 
-# import correlation matrix
+
+# import correlation matrix 
 
 # set seed
 
