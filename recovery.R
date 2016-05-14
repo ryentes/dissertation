@@ -10,7 +10,7 @@ setwd("e:/dropbox/dissertation/03 - code")
 # Load utilities
 source("utils.R")
 
-d <- read.table("cyw/simd1.dat", header=T)
+d <- read.table("cyw/bigSim.dat", header=T)
 
 # Select out constructs to be included and create a vector of keys for 
 # reverse coded items
@@ -66,7 +66,7 @@ ocorr <- as.matrix(read.table("resources/fcorr.dat", header=T, row.names=1))
 
 # Find the difference between recovered facet scores and those originally
 # specified
-ftest <- abs(fcorr) - abs(ocorr)
+ftest <- abs(abs(fcorr) - abs(ocorr))
 
 # Check max difference
 max(ftest)
@@ -100,7 +100,7 @@ opar <- read.table("resources/ipar.dat", header=T, row.names=1)
 
 # Compute the difference between recovered item parameters and those
 # used to simulate the data.
-iptest <- abs(ipar) - abs(opar)
+iptest <- abs(abs(ipar) - abs(opar))
 
 # Check max differnece
 max(iptest, na.rm=T)

@@ -33,40 +33,40 @@ colnames(d)[1] <- "HSinc1"
 
 # Select out constructs to be included and create a vector of keys for 
 # reverse coded items
-sincerity <- d[,1:10]
-fairness <- d[,11:20]
-anxiety <- d[,51:60]
-dependence <- d[,61:70]
-liveliness <- d[,111:120]
-forgiveness <- d[,121:130]
-patience <- d[,151:160]
-perfectionism <- d[,181:190]
-inquisitiveness <- d[,211:220]
-unconventionality <- d[,231:240]
+HSincerity <- d[,1:10]
+HFairness <- d[,11:20]
+EAnxiety <- d[,51:60]
+EDependence <- d[,61:70]
+XLiveliness <- d[,111:120]
+AForgiveness <- d[,121:130]
+APatience <- d[,151:160]
+CPerfectionism <- d[,181:190]
+OInquisitiveness <- d[,211:220]
+OUnconventionality <- d[,231:240]
 
 # Create a vector of names
-n <- c("sincerity", "fairness", "anxiety", "dependence", "liveliness",
-       "forgiveness", "patience", "perfectionism", "inquisitiveness", 
-       "unconventionality")
+n <- c("HSincerity", "HFairness", "EAnxiety", "EDependence", "XLiveliness",
+       "AForgiveness", "APatience", "CPerfectionism", "OInquisitiveness", 
+       "OUnconventionality")
 
 # Define keys for negatively coded variables
 # Note: Negative is defined in reference to the construct name,
 # Not it's social desirability. dependence is absent because it
 # consists of only positive items.
 key <- list()
-key[["sinc"]] <- c(2:10)
-key[["fair"]] <- c(6:10)
-key[["anxi"]] <- c(6:10)
-key[["live"]] <- c(9,10)
-key[["forg"]] <- c(5:10)
-key[["pati"]] <- c(6:10)
-key[["perf"]] <- c(9,10)
-key[["inqu"]] <- c(7:10)
-key[["unco"]] <- c(6:10)
+key[["HSinc"]] <- c(2:10)
+key[["HFair"]] <- c(6:10)
+key[["EAnxi"]] <- c(6:10)
+key[["XLive"]] <- c(9,10)
+key[["AForg"]] <- c(5:10)
+key[["APati"]] <- c(6:10)
+key[["CPerf"]] <- c(9,10)
+key[["OInqu"]] <- c(7:10)
+key[["OUnco"]] <- c(6:10)
   
 # Reverse code and compute factor scores for each  facet.
 for (i in 1:length(n)){
-  name <- substr(n[i],1,4)
+  name <- substr(n[i],1,5)
   if(!is.null(key[[name]])) {  
     tmp <- revcode(eval(as.name(n[i])),key[[name]],7)
   } else tmp <- eval(as.name(n[i]))
@@ -75,7 +75,7 @@ for (i in 1:length(n)){
 }
 
 # Combine factor scores into a matrix
-factors <- cbind(sinc,fair,anxi,depe,live,forg,pati,perf,inqu,unco)
+factors <- cbind(HSinc,HFair,EAnxi,EDepe,XLive,AForg,APati,CPerf,OInqu,OUnco)
 
 fcorr <- cor(factors)
 
@@ -110,6 +110,3 @@ write.table(ipar, file="resources/ipar.dat")
 
 # Clean up the work space (warning this will wipe your R environment)
 rm(list=ls())
-
-
-
