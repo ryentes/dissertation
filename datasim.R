@@ -11,6 +11,9 @@ fcorr <- read.table("resources/fcorr.dat", header=T, row.names=1)
 # User specified variables
 nObs <- 1000
 nDataSets <- 5000
+labels <- c('longstring', 'skewed')
+lsDis <- c(.07,.02)
+skewDis <- c(.11,.04)
 seed = 1234
 
 ## other parameters
@@ -22,6 +25,10 @@ d <- as.matrix(ipar[,2:ncol(ipar)])
   ## Generate item level data
   fakeData <- simdata(a, d, itemtype="graded", Theta=f, mins=1)
   colnames(fakeData) <- rownames(ipar)
+  # Insert careless respndents
+  fakeData <- cbind(fakeData,sampleCareless(nObs, labels, lsDis, skewDis))
+
+  # write the dataset to a file
   write.table(fakeData, "cyw/simd1.dat", row.names=F)
   seed <- seed + 1
 #}
