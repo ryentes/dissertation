@@ -1,18 +1,20 @@
 ## Simulate careless responder following the resources model
-simCareless <- function(x, c) {
-  refract <- rnorm(1, )
-  insert <- rnorm(1,)
-  if(c=='longstring') {
-    
+simCareless <- function(x,floor=1,ceiling=7) {
+  nitems <- length(x)-2
+  insert <- round(rnorm(1, mean=50,sd=10)) # get from adam's dataset?
+  if(insert < 1) insert <- 1 #do i want a lower bound?
+  refract <- round(rnorm(1, mean=10,sd=5))
+  if(x['crModel']=='longstring') {
+    repvalue <- sample(floor:ceiling,1)
+    x[insert:nitems] <- repvalue
   }
-  else if(c=='skewed'){
-    
+  if(x['crModel']=='skewed') {
+    span <- insert:nitems
+    repvalue <- genSkewed(length(span))
+    x[span] <- repvalue
   }
+  return(x)
 }
-
-## Simulate careless responder following the longstring model
-
-## Simulate careless responder following the skewed distribution model
 
 ## Reverse coding
 revcode <- function(x, neg, max) {
@@ -66,7 +68,7 @@ sampleCareless <- function(n,labels,...) {
   sigma <- unlist(lapply(pars, '[[', 2))
   # Sample CL model proportions and multiply by n to get the number
   # of people responding carelessly according to each type.
-  CLProps <- round(rnorm(rep(length(pars),1),mu,sigma)*n)
+  CLProps <- round(abs(rnorm(rep(length(pars),1),mu,sigma)*n))
   nCL <- sum(CLProps)
   # Randomly choose responders to be careless
   whichCL <- sample(n, nCL)
@@ -97,4 +99,11 @@ recursiveAssign <- function(x, d, labels) {
     x[!selected] <- recursiveAssign(x[!selected],d,labels)
   }
   return(x)
+}
+
+genSkewed <- function(x,mu=5.75, sigma=1.25, floor=1,ceiling=7) {
+  r <- round(rnorm(x, mu, sigma))
+  r[r>ceiling] <- ceiling
+  r[r<floor] <- floor
+  return(r)
 }
