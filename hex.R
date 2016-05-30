@@ -1,9 +1,10 @@
 ### Load Hexaco data and prepare it for Parameter estimation
 library(mirt)
 library(plyr)
+library(foreach)
+library(doParallel)
 
 # Set Working Directory
-setwd("e:/dropbox/dissertation/03 - code")
 
 # Load utilities
 source("utils.R")
@@ -95,12 +96,11 @@ rows <- NULL
 # Estimate item parameters by construct using the grm. eval(as.name()) replaces 
 # itself with the "name" for the current value of x. Then extract the item
 # parameters from the model object as a dataframe 
-for(c in 1:length(n)) {
+ipar <- foreach(c=1:length(n), .combine=rbind) %dopar% {
   y <- mirt(eval(as.name(n[c])), 1)
   p <- as.data.frame(coef(y, simplify=T)$items) 
-  ipar <- rbind.fill(ipar,p)
-  rows <- c(rows, rownames(p))
 }
+
 
 # rbind.fill doesn't support row names, so rejoin those
 rownames(ipar) <- rows

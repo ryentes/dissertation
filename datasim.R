@@ -1,7 +1,9 @@
-setwd('E:/Dropbox/Dissertation/03 - Code')
+setwd('~/dissertation')
 
 # load dependencies
 library(mirt)
+library(doParallel)
+library(foreach)
 source('utils.R')
 
 # import item parameters
@@ -23,25 +25,27 @@ a <- modelSlopes(ipar,colnames(fcorr), 5)
 d <- as.matrix(ipar[,2:ncol(ipar)])
 i <- 1
 
-while(i <= nDatasets) {
-  f = simFactorScores(fcorr,nObs, seed)
-  ## Generate item level data
-  fakeData <- simdata(a, d, itemtype="graded", Theta=f, mins=1)
-  colnames(fakeData) <- rownames(ipar)
-  # Insert careless respndents
-  fakeData <- cbind(fakeData,sampleCareless(nObs, labels, lsDis, skewDis))
-  careless <- fakeData[,'careless']==1
-  fakeData[careless,] <- t(apply(fakeData[careless,],1,simCareless))
+ptime <- system.time({
+  foreach(i=1:nDatasets) %dopar% {
+    f = simFactorScores(fcorr,nObs, seed)
+    ## Generate item level data
+    fakeData <- simdata(a, d, itemtype="graded", Theta=f, mins=1)
+    colnames(fakeData) <- rownames(ipar)
+    # Insert careless respndents
+    fakeData <- cbind(fakeData,sampleCareless(nObs, labels, lsDis, skewDis))
+    careless <- fakeData[,'careless']==1
+    fakeData[careless,] <- t(apply(fakeData[careless,],1,simCareless))
 
-  # write the dataset to a file
-  fn <- paste0("simulated/sim", i, ".dat")
-  write.table(fakeData, fn, row.names=F)
+    # write the dataset to a file
+    fn <- paste0("simulated/sim", i, ".dat")
+    write.table(fakeData, fn, row.names=F)
   
-  print(i)
-  #increment the looping variables
-  seed <- seed + 1
-  i <- i+1
-}
+    print(i)
+    #increment the looping variables
+    seed <- seed + 1
+    i <- i+1
+  }
+})
 
 
 
