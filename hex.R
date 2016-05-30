@@ -5,6 +5,7 @@ library(foreach)
 library(doParallel)
 
 # Set Working Directory
+setwd('~/dissertation')
 
 # Load utilities
 source("utils.R")
