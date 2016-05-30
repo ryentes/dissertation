@@ -25,6 +25,8 @@ a <- modelSlopes(ipar,colnames(fcorr), 5)
 d <- as.matrix(ipar[,2:ncol(ipar)])
 i <- 1
 
+registerDoParallel(8)
+
 ptime <- system.time({
   foreach(i=1:nDatasets) %dopar% {
     f = simFactorScores(fcorr,nObs, seed)

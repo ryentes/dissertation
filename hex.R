@@ -96,9 +96,10 @@ rows <- NULL
 # Estimate item parameters by construct using the grm. eval(as.name()) replaces 
 # itself with the "name" for the current value of x. Then extract the item
 # parameters from the model object as a dataframe 
+registerDoParallel(8)
 ipar <- foreach(c=1:length(n), .combine=rbind) %dopar% {
   y <- mirt(eval(as.name(n[c])), 1)
-  p <- as.data.frame(coef(y, simplify=T)$items) 
+  as.data.frame(coef(y, simplify=T)$items) 
 }
 
 
