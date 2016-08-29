@@ -17,7 +17,9 @@ get.perfByModel <- function(x, flag) {
   r <- vector(mode='numeric', length=nModels)
   for(i in 1:nModels) {
     this.model <- which(x[,'crModel']==models[i])
-    r[i] <-  sum(flag[this.model] == 1)/ length(this.model)
+    if(length(this.model) > 0) {
+      r[i] <-  sum(flag[this.model] == 1)/ length(this.model)
+    } else r[i] = NA
   }
   r <- t(r)
   colnames(r) <- models
@@ -47,9 +49,11 @@ get.lsPerf <- function(x, cut) {
   ls.pctCorrect <- mean(lsFlag==knownCR)
   ls.ntp <- sum(lsFlag  & knownCR)
   ls.ntn <- sum(!lsFlag & !knownCR)
-  ls.tp <-  ls.ntp / ls.np
+  if(ls.np > 0) ls.tp <-  ls.ntp / ls.np
+  else ls.tp <- 0
   ls.fp <- 1-ls.tp
-  ls.tn <- ls.ntn / ls.nn
+  if(ls.nn > 0) ls.tn <- ls.ntn / ls.nn
+  else ls.tn <- 0
   ls.fn <- 1-ls.tn
   ls.perfByModel <- get.perfByModel(x, lsFlag)
   colnames(ls.perfByModel) <- make.colnames('ls.pct', colnames(ls.perfByModel))
@@ -73,14 +77,16 @@ get.d2Perf <- function(x, cut, method='sd') {
     d2Flag <- outlier(x, confidence=cut)
   }
   else d2Flag <- as.vector(cri.cut(outlier(x, raw=TRUE), cut))
-  d2.np <- sum(d2Flag)
-  d2.nn <- sum(!d2Flag)
+  d2.np <- sum(d2Flag, na.rm=T)
+  d2.nn <- sum(!d2Flag, na.rm=T)
   d2.pctCorrect <- mean(d2Flag==knownCR)
   d2.ntp <- sum(d2Flag & knownCR)
-  d2.ntn <- sum(!d2Flag & !knownCR) 
-  d2.tp <- d2.ntp / d2.np
+  d2.ntn <- sum(!d2Flag & !knownCR)
+  if(d2.np > 0) d2.tp <- d2.ntp / d2.np
+  else d2.tp <- 0
   d2.fp <- 1-d2.tp
-  d2.tn <- d2.ntn / d2.nn 
+  if(d2.nn > 0) d2.tn <- d2.ntn / d2.nn 
+  else dt.tn <- 0
   d2.fn <- 1-d2.tn
   d2.perfByModel <- get.perfByModel(crStats, d2Flag)
   colnames(d2.perfByModel) <- make.colnames('d2.pct', colnames(d2.perfByModel))
@@ -102,14 +108,16 @@ get.d2Perf <- function(x, cut, method='sd') {
 ## subscales are the ones we would think of as careless
 get.eoPerf <- function(x, cut) {
   eoFlag <- cri.cut(x[,'eo'], cut, direction='left')
-  eo.np <- sum(eoFlag)
-  eo.nn <- sum(!eoFlag)
+  eo.np <- sum(eoFlag, na.rm=T)
+  eo.nn <- sum(!eoFlag, na.rm=T)
   eo.pctCorrect <- mean(eoFlag==knownCR)
   eo.ntp <- sum(eoFlag & knownCR)
   eo.ntn <- sum(!eoFlag & !knownCR)
-  eo.tp <- eo.ntp / eo.np
+  if(eo.np > 0) eo.tp <- eo.ntp / eo.np
+  else eo.tp <- 0
   eo.fp <- 1-eo.tp
-  eo.tn <- eo.ntn / eo.nn
+  if(eo.nn > 0) eo.tn <- eo.ntn / eo.nn
+  else eo.tn <- 0
   eo.fn <- 1-eo.tn
   eo.perfByModel <- get.perfByModel(crStats, eoFlag)
   colnames(eo.perfByModel) <- make.colnames('eo.pct', colnames(eo.perfByModel))

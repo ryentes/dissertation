@@ -7,11 +7,14 @@ source('performance.R')
 
 dsnames <- list.files('simulated')
 
-registerDoParallel()
-test <- foreach(c=1:10, .combine='rbind') %dopar% {
+
+registerDoParallel(8)
+
+ttime2 <- system.time({
+cut.tests <- foreach(c=1:length(dsnames), .combine='rbind', .errorhandling = 'pass') %dopar% {
   # Read the dataset
   d <- read.table(paste0('simulated/', dsnames[c]), header=T)
-
+  #d <- read.table(paste0('simulated/', dsnames[589]), header=T)
   # Split off the sample statistics
   crStats <- d[,101:102]
   d <- d[,1:100]
@@ -59,7 +62,7 @@ test <- foreach(c=1:10, .combine='rbind') %dopar% {
         eo.perf1.5)
 }
 
-
+})
 
 
 
