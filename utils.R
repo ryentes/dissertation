@@ -56,7 +56,7 @@ simFactorScores <- function(x,n,seed=NULL) {
 # The number of careless respondents for each model of careless responding
 # is sampled individually
 # 
-# This function takes n) the total sample size and lables) which are the 
+# This function takes (n) the total sample size and lables) which are the 
 # labels for the different models of careless responding. Additionally,
 # It requires and arbitrary number of additional vectors representing the
 # mean and standard deviation for each careless responding model, in the order
@@ -106,4 +106,13 @@ genSkewed <- function(x,mu=5.75, sigma=1.25, floor=1,ceiling=7) {
   r[r>ceiling] <- ceiling
   r[r<floor] <- floor
   return(r)
+}
+
+# Makes rownames for the list of item parameters in the hex program
+make.rownames <- function(n) {
+  rnames <- vector(mode="character")
+  for (i in 1:length(n)) {
+    rnames <- c(rnames, colnames(eval(as.name(n[i]))))
+  }
+  rnames
 }

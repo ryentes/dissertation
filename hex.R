@@ -21,10 +21,11 @@ rm(x)
 
 # Remove obeservations where respondents reported inadequate 
 # understanding of instructions or attention. Min time to completion
-# Was x and max time to completion was y, so instead of cutting by 
-# standard deviation, somewhat arbirtrary time bounds were imposed.
-test1 <- d[,"V1"] >= 5
-test2 <- d[,"V2"] >= 5
+# Was 0 seconds and max time to completion was 786816 seconds (about 9.5 days), 
+# so instead of cutting by standard deviation, somewhat arbirtrary time bounds 
+# were imposed.
+test1 <- d[,"V1"] >= 5 # Participant claims to understand the instructions
+test2 <- d[,"V2"] >= 5 # Participant claims to have answered accurately.
 test3 <- d[,"elapse"] < 6000 # Around 2 hours
 test4 <- d[,"elapse"] > 1037.456 # less than 17.5 minutes
 d <- d[which(test1 & test2 & test3 & test4),]
@@ -90,9 +91,6 @@ x <- t(apply(d[,1:240],2,table))
 # Write out response option frequencies
 write.table(x, file="resources/responsefreq.dat")
 
-# Instantiate Looping Variables
-ipar <- NULL
-rows <- NULL
 
 # Estimate item parameters by construct using the grm. eval(as.name()) replaces 
 # itself with the "name" for the current value of x. Then extract the item
@@ -102,6 +100,9 @@ ipar <- foreach(c=1:length(n), .combine=rbind) %dopar% {
   y <- mirt(eval(as.name(n[c])), 1)
   as.data.frame(coef(y, simplify=T)$items) 
 }
+
+# Make row names
+rows <- make.rownames(n)
 
 
 # rbind.fill doesn't support row names, so rejoin those

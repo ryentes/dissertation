@@ -27,11 +27,7 @@ i <- 1 # <- probably unnecessary as it's defined below
 
 registerDoParallel()
 
-pb <- txtProgressBar(max=nDatasets, styel=3)
-progress <- function(n) setTxtProgressBar(pb,n)
-opts <- list(progress=progress)
-
-#ptime <- system.time({
+ptime <- system.time({
   foreach(i=1:nDatasets, .verbose=TRUE) %dopar% {
     f = simFactorScores(fcorr,nObs, seed[i])
     ## Generate item level data
@@ -43,10 +39,10 @@ opts <- list(progress=progress)
     fakeData[careless,] <- t(apply(fakeData[careless,],1,simCareless))
 
     # write the dataset to a file
-    fn <- paste0("simulated/tim", i, ".dat")
+    fn <- paste0("simulated/sim", i, ".dat")
     write.table(fakeData, fn, row.names=F)
   }
-#})
+})
 
 
 
