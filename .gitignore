@@ -2,3 +2,4 @@ data/*
 logs/*
 *.tex
 *.tar.gz
+*/.ipynb_checkpoints/*
