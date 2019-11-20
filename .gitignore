@@ -1,5 +1,6 @@
 data/*
 logs/*
+artifacts/*
 *.tex
 *.tar.gz
 */.ipynb_checkpoints/*
