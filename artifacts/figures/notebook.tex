@@ -1,0 +1,627 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{rq1table}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{library}\PY{p}{(}rdydisstools\PY{p}{)}
+        \PY{k+kn}{library}\PY{p}{(}ggplot2\PY{p}{)}
+        \PY{k+kn}{library}\PY{p}{(}svglite\PY{p}{)}
+        \PY{k+kn}{library}\PY{p}{(}glue\PY{p}{)}
+        \PY{k+kn}{library}\PY{p}{(}dplyr\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Attaching package: ‘dplyr’
+
+The following object is masked from ‘package:glue’:
+
+    collapse
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+
+    \end{Verbatim}
+
+    Ok, so first we're going to grab the maxj data from our artifacts folder
+then bind it all up into one data frame
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k+kr}{for}\PY{p}{(}i \PY{k+kr}{in} \PY{l+m}{1}\PY{o}{:}\PY{l+m}{5000}\PY{p}{)} \PY{p}{\PYZob{}}
+            lsfn \PY{o}{\PYZlt{}\PYZhy{}} glue\PY{o}{::}glue\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{\PYZti{}/notebooks/dissertation/artifacts/rq1/ls/sim\PYZob{}i\PYZcb{}.RData\PYZsq{}}\PY{p}{)}
+            eofn \PY{o}{\PYZlt{}\PYZhy{}} glue\PY{o}{::}glue\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{\PYZti{}/notebooks/dissertation/artifacts/rq1/eo/sim\PYZob{}i\PYZcb{}.RData\PYZsq{}}\PY{p}{)}
+            mdfn \PY{o}{\PYZlt{}\PYZhy{}} glue\PY{o}{::}glue\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{\PYZti{}/notebooks/dissertation/artifacts/rq1/md/sim\PYZob{}i\PYZcb{}.RData\PYZsq{}}\PY{p}{)}
+            
+            \PY{k+kp}{load}\PY{p}{(}lsfn\PY{p}{)}
+            \PY{k+kp}{load}\PY{p}{(}eofn\PY{p}{)}
+            \PY{k+kp}{load}\PY{p}{(}mdfn\PY{p}{)}
+            
+            row \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kp}{cbind}\PY{p}{(}maxLookup\PY{p}{(}\PY{k+kp}{ls}\PY{o}{\PYZdl{}}informedness\PY{p}{)}\PY{p}{,} maxLookup\PY{p}{(}eo\PY{o}{\PYZdl{}}informedness\PY{p}{)}\PY{p}{,} maxLookup\PY{p}{(}md\PY{o}{\PYZdl{}}informedness\PY{p}{)}\PY{p}{)}
+                                   
+            \PY{k+kr}{if}\PY{p}{(}i\PY{o}{==}\PY{l+m}{1}\PY{p}{)} \PY{p}{\PYZob{}}
+                df \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kp}{row}
+            \PY{p}{\PYZcb{}} \PY{k+kr}{else} \PY{p}{\PYZob{}}
+                df \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kp}{rbind}\PY{p}{(}df\PY{p}{,} \PY{k+kp}{row}\PY{p}{)}
+            \PY{p}{\PYZcb{}}
+        \PY{p}{\PYZcb{}}
+        
+        \PY{k+kp}{colnames}\PY{p}{(}df\PY{p}{)} \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{ls.range\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{ls.informedness\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{ls.meanJ\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{ls.sdJ\PYZdq{}}\PY{p}{,}
+                          \PY{l+s}{\PYZdq{}}\PY{l+s}{eo.range\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{eo.informedness\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{eo.meanJ\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{eo.sdJ\PYZdq{}}\PY{p}{,}
+                          \PY{l+s}{\PYZdq{}}\PY{l+s}{md.range\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{md.informedness\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{md.meanJ\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{md.sdJ\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    Next, let's the metrics out into their own datasets (we could avoid this
+step if we didn't cbind in the previous step)
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} lsmetrics \PY{o}{\PYZlt{}\PYZhy{}} df \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}} select\PY{p}{(}ls.range\PY{p}{,} ls.informedness\PY{p}{,} ls.meanJ\PY{p}{,} ls.sdJ\PY{p}{)}
+        eometrics \PY{o}{\PYZlt{}\PYZhy{}} df \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}} select\PY{p}{(}eo.range\PY{p}{,} eo.informedness\PY{p}{,} eo.meanJ\PY{p}{,} eo.sdJ\PY{p}{)}
+        mdmetrics \PY{o}{\PYZlt{}\PYZhy{}} df \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}} select\PY{p}{(}md.range\PY{p}{,} md.informedness\PY{p}{,} md.meanJ\PY{p}{,} md.sdJ\PY{p}{)}
+\end{Verbatim}
+
+
+    Next, we're going to calculate the measures of central tendency for the
+index of maxJ for each metric. My proposal was to use the value of
+informedness at the threshold of average(maxJ) over all samples. Mean,
+Median, and Mode are all types of averages, and there may be a strong
+argument to using something like the mode instead of mean. Despite this,
+I think it would confuse readers, so I'll stick with mean for now,
+unless a good reason arises.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} mode \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kp}{rbind}\PY{p}{(}indexOfMode\PY{p}{(}lsmetrics\PY{p}{)}\PY{p}{,} indexOfMode\PY{p}{(}eometrics\PY{p}{)}\PY{p}{,} indexOfMode\PY{p}{(}mdmetrics\PY{p}{)}\PY{p}{)}
+        lsct \PY{o}{\PYZlt{}\PYZhy{}} lsmetrics \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}} summarise\PY{p}{(}mean\PY{o}{=}\PY{k+kp}{format}\PY{p}{(}\PY{k+kp}{mean}\PY{p}{(}ls.range\PY{p}{)}\PY{p}{,} digits\PY{o}{=}\PY{l+m}{2}\PY{p}{)}\PY{p}{,} sd\PY{o}{=}\PY{k+kp}{format}\PY{p}{(}sd\PY{p}{(}ls.range\PY{p}{)}\PY{p}{,} digits\PY{o}{=}\PY{l+m}{2}\PY{p}{)}\PY{p}{,} median\PY{o}{=}median\PY{p}{(}ls.range\PY{p}{)}\PY{p}{)}
+        eoct \PY{o}{\PYZlt{}\PYZhy{}} eometrics \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}} summarise\PY{p}{(}mean\PY{o}{=}\PY{k+kp}{format}\PY{p}{(}\PY{k+kp}{mean}\PY{p}{(}eo.range\PY{p}{)}\PY{p}{,} digits\PY{o}{=}\PY{l+m}{2}\PY{p}{)}\PY{p}{,} sd\PY{o}{=}\PY{k+kp}{format}\PY{p}{(}sd\PY{p}{(}eo.range\PY{p}{)}\PY{p}{,} digits\PY{o}{=}\PY{l+m}{2}\PY{p}{)}\PY{p}{,} median\PY{o}{=}median\PY{p}{(}eo.range\PY{p}{)}\PY{p}{)}
+        mdct \PY{o}{\PYZlt{}\PYZhy{}} mdmetrics \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}} summarise\PY{p}{(}mean\PY{o}{=}\PY{k+kp}{format}\PY{p}{(}\PY{k+kp}{mean}\PY{p}{(}md.range\PY{p}{)}\PY{p}{,} digits\PY{o}{=}\PY{l+m}{2}\PY{p}{)}\PY{p}{,} sd\PY{o}{=}\PY{k+kp}{format}\PY{p}{(}sd\PY{p}{(}md.range\PY{p}{)}\PY{p}{,} digits\PY{o}{=}\PY{l+m}{2}\PY{p}{)}\PY{p}{,} median\PY{o}{=}median\PY{p}{(}md.range\PY{p}{)}\PY{p}{)}
+        ct \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kp}{cbind}\PY{p}{(}\PY{k+kp}{rbind}\PY{p}{(}lsct\PY{p}{,} eoct\PY{p}{,} mdct\PY{p}{)}\PY{p}{,} \PY{k+kp}{mode}\PY{p}{)}
+        \PY{k+kp}{colnames}\PY{p}{(}ct\PY{p}{)}\PY{p}{[}\PY{l+m}{4}\PY{p}{]} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{mode\PYZdq{}}
+        labels \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kp}{rbind}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Longstring\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{Even\PYZhy{}odd\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{Outlier\PYZdq{}}\PY{p}{)}
+        \PY{k+kp}{cbind}\PY{p}{(}\PY{k+kp}{labels}\PY{p}{,} ct\PY{p}{)}
+\end{Verbatim}
+
+
+    A data.frame: 3 × 5
+\begin{tabular}{r|lllll}
+ labels & mean & sd & median & mode\\
+ <fct> & <chr> & <chr> & <dbl> & <dbl>\\
+\hline
+	 Longstring & 0.39 & 0.36 & 0.4 &  0.4\\
+	 Even-odd   & 0.22 & 0.74 & 0.1 & -0.3\\
+	 Outlier    & 0.54 & 0.5  & 0.5 &  0.3\\
+\end{tabular}
+
+
+    
+    Now that we've found the index of avg(maxJ) for each metric we're going
+to look up informedness at that threshold for each sample and metric. To
+do that we do need to go back through each of the datasets and find the
+value of J at the chosen threshold. For longstring, that's .4; evenodd
+is .2; outlier is .5.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k+kr}{for}\PY{p}{(}i \PY{k+kr}{in} \PY{l+m}{1}\PY{o}{:}\PY{l+m}{5000}\PY{p}{)} \PY{p}{\PYZob{}}
+            lsfn \PY{o}{\PYZlt{}\PYZhy{}} glue\PY{o}{::}glue\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{\PYZti{}/notebooks/dissertation/artifacts/rq1/ls/sim\PYZob{}i\PYZcb{}.RData\PYZsq{}}\PY{p}{)}
+            eofn \PY{o}{\PYZlt{}\PYZhy{}} glue\PY{o}{::}glue\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{\PYZti{}/notebooks/dissertation/artifacts/rq1/eo/sim\PYZob{}i\PYZcb{}.RData\PYZsq{}}\PY{p}{)}
+            mdfn \PY{o}{\PYZlt{}\PYZhy{}} glue\PY{o}{::}glue\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{\PYZti{}/notebooks/dissertation/artifacts/rq1/md/sim\PYZob{}i\PYZcb{}.RData\PYZsq{}}\PY{p}{)}
+            
+            \PY{k+kp}{load}\PY{p}{(}lsfn\PY{p}{)}
+            \PY{k+kp}{load}\PY{p}{(}eofn\PY{p}{)}
+            \PY{k+kp}{load}\PY{p}{(}mdfn\PY{p}{)}
+            
+            row \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kp}{cbind}\PY{p}{(}i\PY{p}{,} jLookup\PY{p}{(}\PY{k+kp}{ls}\PY{o}{\PYZdl{}}informedness\PY{p}{,} \PY{l+m}{.4}\PY{p}{)}\PY{p}{,} jLookup\PY{p}{(}eo\PY{o}{\PYZdl{}}informedness\PY{p}{,} \PY{l+m}{.2}\PY{p}{)}\PY{p}{,} jLookup\PY{p}{(}md\PY{o}{\PYZdl{}}informedness\PY{p}{,} \PY{l+m}{.5}\PY{p}{)}\PY{p}{)}
+             \PY{k+kr}{if}\PY{p}{(}i\PY{o}{==}\PY{l+m}{1}\PY{p}{)} \PY{p}{\PYZob{}}
+                df2 \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kp}{row}
+            \PY{p}{\PYZcb{}} \PY{k+kr}{else} \PY{p}{\PYZob{}}
+                df2 \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kp}{rbind}\PY{p}{(}df2\PY{p}{,} \PY{k+kp}{row}\PY{p}{)}
+            \PY{p}{\PYZcb{}}
+            
+            \PY{k+kp}{colnames}\PY{p}{(}df2\PY{p}{)} \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{sample\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{lsjat.4\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{eojat.2\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{mdjat.5\PYZdq{}}\PY{p}{)}
+        \PY{p}{\PYZcb{}}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} df2 \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}} \PY{k+kp}{head}
+        evals \PY{o}{\PYZlt{}\PYZhy{}} df2 \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}} \PY{k+kp}{as.data.frame}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}} mutate\PY{p}{(}ls.eval\PY{o}{=}case\PYZus{}when\PY{p}{(}lsjat.4 \PY{o}{\PYZgt{}} \PY{l+m}{0} \PY{o}{\PYZti{}} \PY{l+m}{1}\PY{p}{,}
+                                                              \PY{k+kc}{TRUE} \PY{o}{\PYZti{}} \PY{l+m}{0}\PY{p}{)}\PY{p}{,}
+                                           eo.eval\PY{o}{=}case\PYZus{}when\PY{p}{(}eojat.2 \PY{o}{\PYZgt{}} \PY{l+m}{0} \PY{o}{\PYZti{}} \PY{l+m}{1}\PY{p}{,}
+                                                              \PY{k+kc}{TRUE} \PY{o}{\PYZti{}} \PY{l+m}{0}\PY{p}{)}\PY{p}{,}
+                                           md.eval\PY{o}{=}case\PYZus{}when\PY{p}{(}mdjat.5 \PY{o}{\PYZgt{}} \PY{l+m}{0} \PY{o}{\PYZti{}} \PY{l+m}{1}\PY{p}{,}
+                                                              \PY{k+kc}{TRUE} \PY{o}{\PYZti{}} \PY{l+m}{0}\PY{p}{)}\PY{p}{)}
+        
+        \PY{k+kp}{head}\PY{p}{(}evals\PY{p}{)}
+        evals \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}} summarise\PY{p}{(}ls.total\PY{o}{=}\PY{k+kp}{sum}\PY{p}{(}ls.eval\PY{p}{)}\PY{p}{,} ls.total.mean\PY{o}{=}\PY{k+kp}{mean}\PY{p}{(}lsjat.4\PY{p}{)}\PY{p}{,} ls.total.sd\PY{o}{=}sd\PY{p}{(}lsjat.4\PY{p}{)}\PY{p}{,} eo.total\PY{o}{=}\PY{k+kp}{sum}\PY{p}{(}eo.eval\PY{p}{)}\PY{p}{,} eo.total.mean\PY{o}{=}\PY{k+kp}{mean}\PY{p}{(}eojat.2\PY{p}{)}\PY{p}{,} eo.total.sd\PY{o}{=}sd\PY{p}{(}eojat.2\PY{p}{)}\PY{p}{,} md.total\PY{o}{=}\PY{k+kp}{sum}\PY{p}{(}md.eval\PY{p}{)}\PY{p}{,} md.total.mean\PY{o}{=}\PY{k+kp}{mean}\PY{p}{(}mdjat.5\PY{p}{)}\PY{p}{,} md.total.sd\PY{o}{=}sd\PY{p}{(}mdjat.5\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    A matrix: 6 × 4 of type dbl
+\begin{tabular}{llll}
+ sample & lsjat.4 & eojat.2 & mdjat.5\\
+\hline
+	 1 & 0.2619138 &  0.01232536 & 0.09645013\\
+	 2 & 0.2052767 &  0.05148005 & 0.17824968\\
+	 3 & 0.2189474 &  0.06315789 & 0.28842105\\
+	 4 & 0.1667888 &  0.07203907 & 0.23199023\\
+	 5 & 0.1013825 &  0.14132104 & 0.38832565\\
+	 6 & 0.2174665 & -0.02190705 & 0.10860664\\
+\end{tabular}
+
+
+    
+    A data.frame: 6 × 7
+\begin{tabular}{r|lllllll}
+ sample & lsjat.4 & eojat.2 & mdjat.5 & ls.eval & eo.eval & md.eval\\
+ <dbl> & <dbl> & <dbl> & <dbl> & <dbl> & <dbl> & <dbl>\\
+\hline
+	 1 & 0.2619138 &  0.01232536 & 0.09645013 & 1 & 1 & 1\\
+	 2 & 0.2052767 &  0.05148005 & 0.17824968 & 1 & 1 & 1\\
+	 3 & 0.2189474 &  0.06315789 & 0.28842105 & 1 & 1 & 1\\
+	 4 & 0.1667888 &  0.07203907 & 0.23199023 & 1 & 1 & 1\\
+	 5 & 0.1013825 &  0.14132104 & 0.38832565 & 1 & 1 & 1\\
+	 6 & 0.2174665 & -0.02190705 & 0.10860664 & 1 & 0 & 1\\
+\end{tabular}
+
+
+    
+    A data.frame: 1 × 9
+\begin{tabular}{r|lllllllll}
+ ls.total & ls.total.mean & ls.total.sd & eo.total & eo.total.mean & eo.total.sd & md.total & md.total.mean & md.total.sd\\
+ <dbl> & <dbl> & <dbl> & <dbl> & <dbl> & <dbl> & <dbl> & <dbl> & <dbl>\\
+\hline
+	 4960 & 0.2612381 & 0.1243657 & 4208 & 0.08444369 & 0.08499929 & 4865 & 0.1749188 & 0.09629145\\
+\end{tabular}
+
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}74}]:} jLookup\PY{p}{(}\PY{k+kp}{ls}\PY{o}{\PYZdl{}}informedness\PY{p}{,} \PY{l+m}{.4}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}59}]:} jL \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kr}{function}\PY{p}{(}x\PY{p}{,} i\PY{p}{)} \PY{p}{\PYZob{}}
+           j \PY{o}{=} \PY{k+kp}{which}\PY{p}{(}x\PY{p}{[}\PY{p}{,}\PY{l+m}{1}\PY{p}{]}\PY{o}{==}i\PY{p}{)}
+           \PY{k+kr}{return}\PY{p}{(}x\PY{p}{[}j\PY{p}{,}\PY{l+m}{2}\PY{p}{]}\PY{p}{)}
+         \PY{p}{\PYZcb{}}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}123}]:} \PY{k+kp}{ls}\PY{o}{\PYZdl{}}informedness\PY{o}{\PYZdl{}}\PY{k+kp}{range}\PY{p}{[}\PY{l+m}{32}\PY{p}{]}
+          \PY{k+kp}{which}\PY{p}{(}\PY{k+kp}{sapply}\PY{p}{(}\PY{k+kp}{ls}\PY{o}{\PYZdl{}}informedness\PY{o}{\PYZdl{}}\PY{k+kp}{range}\PY{p}{,} \PY{k+kr}{function}\PY{p}{(}x\PY{p}{)} \PY{k+kp}{isTRUE}\PY{p}{(}\PY{k+kp}{all.equal}\PY{p}{(}x\PY{p}{,} \PY{l+m}{.4}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    0.1
+
+    
+    35
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}241}]:} indexOfMode \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kr}{function}\PY{p}{(}x\PY{p}{)} \PY{p}{\PYZob{}}
+              df \PY{o}{\PYZlt{}\PYZhy{}} x \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}} group\PYZus{}by\PY{p}{(}\PY{l+m}{.}\PY{p}{[}\PY{p}{,}\PY{l+m}{1}\PY{p}{]}\PY{p}{)} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}} summarise\PY{p}{(}n \PY{o}{=} n\PY{p}{(}\PY{p}{)}\PY{p}{)} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}} mutate\PY{p}{(}max\PY{o}{=}\PY{k+kp}{max}\PY{p}{(}n\PY{p}{)}\PY{p}{)}
+              x\PY{p}{[}\PY{k+kp}{which}\PY{p}{(}is.equal\PY{p}{(}df\PY{o}{\PYZdl{}}n\PY{p}{,} df\PY{o}{\PYZdl{}}\PY{k+kp}{max}\PY{p}{)}\PY{p}{)}\PY{p}{,}\PY{l+m}{1}\PY{p}{]}
+          \PY{p}{\PYZcb{}}
+\end{Verbatim}
+
+
+    -0.0999999999999996
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}243}]:} lsmetrics \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}} group\PYZus{}by\PY{p}{(}ls.range\PY{p}{)} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}} mutate\PY{p}{(}n\PY{o}{=}n\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{tabular}{r|lllll}
+ ls.range & ls.informedness & ls.meanJ & ls.sdJ & n\\
+\hline
+	  0.0       & 0.35916593 & 0.14512739 & 0.13173527 & 482       \\
+	  0.5       & 0.21428571 & 0.10869886 & 0.10508109 & 565       \\
+	  0.8       & 0.24000000 & 0.12024159 & 0.11493342 & 181       \\
+	  0.1       & 0.18510379 & 0.08996978 & 0.08976647 & 582       \\
+	  1.1       & 0.11428571 & 0.04556924 & 0.06500177 &  61       \\
+	  0.0       & 0.22582415 & 0.10094654 & 0.09740270 & 482       \\
+	  0.6       & 0.33333333 & 0.16568964 & 0.16374488 & 465       \\
+	  0.1       & 0.44866032 & 0.22649477 & 0.21403421 & 582       \\
+	  0.4       & 0.17720307 & 0.07475975 & 0.07460465 & 588       \\
+	 -0.1       & 0.20506119 & 0.09527556 & 0.08859422 & 256       \\
+	  0.5       & 0.32000000 & 0.16369284 & 0.15417066 & 565       \\
+	  0.7       & 0.26666667 & 0.13491454 & 0.12902562 & 310       \\
+	  0.1       & 0.20110936 & 0.09745135 & 0.09185071 & 582       \\
+	  0.2       & 0.20835095 & 0.09823592 & 0.09604902 & 527       \\
+	  0.7       & 0.38888889 & 0.19750735 & 0.18771288 & 310       \\
+	  0.2       & 0.32040230 & 0.15993028 & 0.15107936 & 527       \\
+	  0.4       & 0.16413043 & 0.05358161 & 0.07785430 & 588       \\
+	  0.0       & 0.34858277 & 0.16248120 & 0.15108524 & 482       \\
+	  0.6       & 0.15094340 & 0.07194473 & 0.08106620 & 465       \\
+	  0.1       & 0.12040100 & 0.05991686 & 0.05567079 & 582       \\
+	  0.2       & 0.34480791 & 0.16508490 & 0.15592255 & 527       \\
+	  0.7       & 0.43333333 & 0.22398558 & 0.20759478 & 310       \\
+	  0.4       & 0.32075472 & 0.17257643 & 0.15728777 & 588       \\
+	  0.3       & 0.30909091 & 0.16090357 & 0.14744633 & 499       \\
+	  0.1       & 0.27953297 & 0.13885449 & 0.13381997 & 582       \\
+	  0.0       & 0.29606763 & 0.13479843 & 0.13008769 & 482       \\
+	  0.4       & 0.23785104 & 0.11482215 & 0.10808960 & 588       \\
+	  0.8       & 0.33333333 & 0.17058194 & 0.16027922 & 181       \\
+	  0.6       & 0.28571429 & 0.15121966 & 0.13963173 & 465       \\
+	  2.1       & 0.02222222 & 0.00475590 & 0.01329816 &   3       \\
+	 ⋮ & ⋮ & ⋮ & ⋮ & ⋮\\
+	  0.5       & 0.3018868  & 0.15688118 & 0.14739854 & 565       \\
+	  0.2       & 0.3822197  & 0.19801186 & 0.18424038 & 527       \\
+	  0.5       & 0.2647059  & 0.13296237 & 0.12952587 & 565       \\
+	  0.0       & 0.2972619  & 0.12715710 & 0.11949204 & 482       \\
+	  0.9       & 0.1142857  & 0.05160787 & 0.05788140 & 120       \\
+	  0.3       & 0.1402306  & 0.05852212 & 0.06468198 & 499       \\
+	  0.0       & 0.2732876  & 0.13697950 & 0.12728707 & 482       \\
+	  0.6       & 0.2391304  & 0.11743244 & 0.11151714 & 465       \\
+	  0.7       & 0.1496267  & 0.05726797 & 0.06508188 & 310       \\
+	  1.5       & 0.1538462  & 0.07624999 & 0.07138699 &  13       \\
+	  0.9       & 0.1935484  & 0.10069581 & 0.09386215 & 120       \\
+	 -0.1       & 0.1915560  & 0.08926024 & 0.08143349 & 256       \\
+	  0.4       & 0.2881356  & 0.14627709 & 0.14341069 & 588       \\
+	  0.5       & 0.2666667  & 0.13739444 & 0.12923186 & 565       \\
+	  1.1       & 0.0625000  & 0.01779885 & 0.03995669 &  61       \\
+	  1.0       & 0.4347826  & 0.22487900 & 0.21161610 &  96       \\
+	  0.1       & 0.4463541  & 0.21654499 & 0.20258387 & 582       \\
+	  0.2       & 0.3644483  & 0.18377963 & 0.17216182 & 527       \\
+	  0.8       & 0.2916667  & 0.15678239 & 0.14257903 & 181       \\
+	  0.9       & 0.2666667  & 0.13401930 & 0.13160829 & 120       \\
+	  0.4       & 0.5217391  & 0.27293416 & 0.25753913 & 588       \\
+	  1.0       & 0.1568627  & 0.08159566 & 0.07535142 &  96       \\
+	  0.4       & 0.2173913  & 0.10749935 & 0.10183831 & 588       \\
+	  0.2       & 0.4044295  & 0.20118415 & 0.19079432 & 527       \\
+	  0.3       & 0.3265306  & 0.16945281 & 0.15953210 & 499       \\
+	  0.5       & 0.3448276  & 0.17548989 & 0.16875303 & 565       \\
+	  0.0       & 0.2598367  & 0.13466190 & 0.12610073 & 482       \\
+	  0.5       & 0.8181818  & 0.42572055 & 0.40117464 & 565       \\
+	 -0.1       & 0.3094198  & 0.14152937 & 0.13265017 & 256       \\
+	  0.6       & 0.2083333  & 0.10453238 & 0.10315582 & 465       \\
+\end{tabular}
+
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}245}]:} \PY{k+kp}{load}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{\PYZti{}/notebooks/dissertation/artifacts/rq1/maxJ.RData\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}248}]:} maxJ \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}} group\PYZus{}by\PY{p}{(}\PY{k+kp}{ls}\PY{p}{)} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}} summarise\PY{p}{(}n\PY{o}{=}n\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{tabular}{r|ll}
+ ls & n\\
+\hline
+	 -0.5 &   5 \\
+	 -0.4 &  23 \\
+	 -0.3 &  53 \\
+	 -0.2 &  17 \\
+	 -0.1 & 256 \\
+	  0.0 & 482 \\
+	  0.1 & 582 \\
+	  0.2 & 527 \\
+	  0.3 & 499 \\
+	  0.4 & 588 \\
+	  0.5 & 565 \\
+	  0.6 & 465 \\
+	  0.7 & 310 \\
+	  0.8 & 181 \\
+	  0.9 & 120 \\
+	  1.0 &  96 \\
+	  1.1 &  61 \\
+	  1.2 &  48 \\
+	  1.3 &  31 \\
+	  1.4 &  28 \\
+	  1.5 &  13 \\
+	  1.6 &  11 \\
+	  1.7 &   9 \\
+	  1.8 &   8 \\
+	  1.9 &   7 \\
+	  2.0 &   7 \\
+	  2.1 &   3 \\
+	  2.2 &   1 \\
+	  2.4 &   2 \\
+	  2.6 &   1 \\
+	  2.7 &   1 \\
+\end{tabular}
+
+
+    
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
